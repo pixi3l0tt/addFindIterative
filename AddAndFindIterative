@@ -1,0 +1,53 @@
+public void addIterative(E newItem) {
+        if (root == null)
+            root = new Node<>(newItem, null, null);
+        else
+            addIterative(newItem, root);
+    }
+    
+    public void addIterative(E newItem, Node<E> where) {
+        int doRepeat = 0;
+        while (doRepeat == 0){
+            int compare = newItem.compareTo(where.data);
+            if (compare < 0 && where.left == null)   {       // base case 1: add to where's left child
+                where.left = new Node<>(newItem, null, null);
+                doRepeat++;
+            }
+            else if (compare > 0 && where.right == null)    {    // base case 2: add to where's right child
+                where.right = new Node<>(newItem, null, null);
+                doRepeat++;
+            }
+            else if (compare < 0)
+                where = where.left;   // where now becomes its left subtree
+            else if (compare > 0)
+                where = where.right;  // where now becomes its right subtree
+            else{
+                System.out.println("This number is already in the tree");
+                doRepeat++; //if it equals 0, do nothing because we dont want duplicate elements
+            }
+        }
+    }
+    
+    public E findIterative(E someItem) {
+        return find(someItem, root);
+    }
+   
+    public E findIterative(E someItem, Node<E> where){
+        int doRepeat = 0;
+        while (doRepeat == 0){
+            if (where == null)   {   // base case: someItem not found in tree
+                return null;
+            }
+            else {
+                int compare = someItem.compareTo(where.data);
+                if (compare == 0)   {// base case: someItem found!
+                    return where.data;
+                }
+                else if (compare < 0)
+                    where = where.left;
+                else
+                    where = where.right;
+            }
+        }
+        return null;
+    }
